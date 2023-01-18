@@ -4,6 +4,8 @@ import GlobalStyle from "./GlobalStyle";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
+import Deposit from "./components/Deposit";
+import Withdraw from "./components/Withdraw";
 
 export default function App(){
     return(
@@ -14,6 +16,8 @@ export default function App(){
                 <Route path="/" element={<Login/>}/>
                 <Route path="/cadastro" element={<Signup/>}/>
                 <Route path="/home" element={<Home/>}/>
+                <Route path="/nova-entrada" element={<Deposit/>}/>
+                <Route path="/nova-saida" element={<Withdraw/>}/>
             </Routes>
         
         </BrowserRouter>
