@@ -1,22 +1,75 @@
 import styled from "styled-components"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const user = "Lucas"
 
+const registers = [
+    {
+        date: "13/01",
+        description: "Almoço no restaurante",
+        value: 39.90
+    },
+    {
+        date: "17/01",
+        description: "Janta",
+        value: 19.00
+    },
+    {
+        date: "20/01",
+        description: "Almoço no restaurante",
+        value: 39.90
+    },
+    {
+        date: "17/01",
+        description: "Janta",
+        value: 19.00
+    },
+    {
+        date: "17/01",
+        description: "Janta",
+        value: 19.00
+    },
+    {
+        date: "17/01",
+        description: "Janta",
+        value: 19.00
+    }
+]
+
 export default function Home(){
+    const navigate = useNavigate()
+
     return(
         <Container>
             <Header>
                 <h1>Olá, {user}</h1>
-                <button>
+                <button onClick={() => navigate('/')}>
                     <ion-icon name="log-out-outline"></ion-icon>
                 </button>
             </Header>
 
             <Registers>
-                <p>
-                    Não há registros de entrada ou saída
-                </p>
+                {registers.length > 0 ? (
+                    <div>
+                        {registers.map(register => (
+                            <Register>
+                                <div>
+                                    <p>{register.date}</p>
+                                    <p>{register.description}</p>
+                                </div>
+                                <p>{register.value.toFixed(2)}</p>
+                            </Register>
+                        ))}
+                    </div>
+                ) : (
+                    <p>
+                        Não há registros de entrada ou saída
+                    </p>
+                )}
+                <div class="balance">
+                    <p>SALDO</p>
+                    <p>3000,00</p>
+                </div>
             </Registers>
 
             <Operations>
@@ -65,11 +118,39 @@ const Header = styled.header`
 `
 const Registers = styled.div`
     margin: 16px 0;
+    padding: 16px;
     width: 100%;
     height: 70vh;
     background-color: #FFFFFF;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    >div{
+        overflow-y: scroll;
+        margin-bottom: 16px;
+    }
+
+    >.balance{
+        position: absolute;
+        background-color: #FFFFFF;
+        bottom: 0px;
+        width: 92%;
+        padding-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        >p{
+            font-size: 17px;
+            font-weight: 700;
+            color: #000000;
+            &:last-child{
+                font-weight: 400;
+                color: #03AC00;
+            }
+        }
+    }
 
     >p{
         color: #868686;
@@ -77,6 +158,23 @@ const Registers = styled.div`
         text-align: center;
         font-size: 20px;
         width: 180px;
+    }
+`
+const Register = styled.div`
+    display: flex;
+    margin-bottom: 16px;
+    align-items: center;
+    justify-content: space-between;
+    >div{
+        display: flex;
+        color: #C6C6C6;
+        >p:last-child{
+            margin-left: 8px;
+            color: #000000;
+        }
+    }
+    >p{
+        color: #C70000;
     }
 `
 const Operations = styled.div`

@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Deposit(){
+export default function OutOperation(){
     const navigate = useNavigate()
 
     return (
         <Container>
-            <h1>Nova entrada</h1>
+            <h1>Nova saída</h1>
 
-            <FormContainer>
+            <FormContainer onSubmit={() => {navigate('/home')}}>
                 <input placeholder="Valor"></input>
                 <input placeholder="Descrição"></input>
 
-                <button onClick={() => {navigate('/home')}}>Salvar entrada</button>
+                <button type="submit">Salvar saída</button>
             </FormContainer>
 
         </Container>
