@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom"
 
 const user = "Lucas"
 
+
 const registers = [
     {
         date: "13/01",
@@ -18,22 +19,8 @@ const registers = [
         date: "20/01",
         description: "Almoço no restaurante",
         value: 39.90
-    },
-    {
-        date: "17/01",
-        description: "Janta",
-        value: 19.00
-    },
-    {
-        date: "17/01",
-        description: "Janta",
-        value: 19.00
-    },
-    {
-        date: "17/01",
-        description: "Janta",
-        value: 19.00
     }
+    
 ]
 
 export default function Home(){
@@ -52,7 +39,7 @@ export default function Home(){
                 {registers.length > 0 ? (
                     <div>
                         {registers.map(register => (
-                            <Register>
+                            <Register key={register.date}>
                                 <div>
                                     <p>{register.date}</p>
                                     <p>{register.description}</p>
@@ -66,7 +53,7 @@ export default function Home(){
                         Não há registros de entrada ou saída
                     </p>
                 )}
-                <div class="balance">
+                <div className="balance">
                     <p>SALDO</p>
                     <p>3000,00</p>
                 </div>
@@ -120,7 +107,7 @@ const Registers = styled.div`
     margin: 16px 0;
     padding: 16px;
     width: 100%;
-    height: 70vh;
+    height: 65vh;
     background-color: #FFFFFF;
     border-radius: 5px;
     display: flex;
@@ -185,7 +172,7 @@ const Operations = styled.div`
 
     >div{
         background-color: #A328D6;
-        width: 160px;
+        width: 155px;
         height: 114px;
         border-radius: 5px;
         position: relative;
