@@ -11,7 +11,7 @@ export default function OutOperation() {
   const [description, setDescription] = useState("");
 
   const { user } = useContext(UserContext);
-  // console.log(user);
+  
   function handleNewWithdraw(event) {
     event.preventDefault();
 
@@ -24,7 +24,7 @@ export default function OutOperation() {
     };
 
     axios
-      .post("http://localhost:5000/nova-entrada", transaction, {
+      .post("http://localhost:5000/nova-saida", transaction, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

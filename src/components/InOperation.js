@@ -11,13 +11,13 @@ export default function InOperation() {
   const [description, setDescription] = useState("");
 
   const { user } = useContext(UserContext);
-  // console.log(user);
+
   function handleNewEntry(event) {
     event.preventDefault();
 
     let transaction = {
       userId: user._id,
-      value,
+      value: Number(value),
       description,
       type: "in",
       date: dayjs(new Date()).format("DD/MM"),

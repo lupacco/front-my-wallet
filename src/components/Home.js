@@ -50,7 +50,7 @@ export default function Home() {
             newBalance -= Number(register.value);
           }
         });
-        setBalance(newBalance.toFixed(2))
+        setBalance(newBalance.toFixed(2));
       })
       .catch((err) => console.log("deu ruim"));
   }, []);
@@ -73,7 +73,10 @@ export default function Home() {
                   <p>{register.date}</p>
                   <p>{register.description}</p>
                 </div>
-                <p>{Number(register.value).toFixed(2)}</p>
+                <div className="amount">
+                  <p>{Number(register.value).toFixed(2)}</p>
+                  <ion-icon name="close-outline"></ion-icon>
+                </div>
               </Register>
             ))}
           </div>
@@ -131,7 +134,7 @@ const Header = styled.header`
 `;
 const Registers = styled.div`
   margin: 16px 0;
-  padding: 16px;
+  padding: 16px 12px;
   width: 100%;
   height: 65vh;
   background-color: #ffffff;
@@ -181,13 +184,23 @@ const Register = styled.div`
   > div {
     display: flex;
     color: #c6c6c6;
+    align-items: center;
     > p:last-child {
       margin-left: 8px;
       color: #000000;
     }
   }
-  > p {
-    color: ${(props) => (props.type == "out" ? `#C70000` : `#03AC00`)};
+  > .amount {
+    > p {
+      color: ${(props) => (props.type === "out" ? `#C70000` : `#03AC00`)};
+    }
+    > ion-icon {
+      color: #c6c6c6;
+      margin-left: 8px;
+      &:hover{
+        cursor: pointer;
+      }
+    }
   }
 `;
 const Operations = styled.div`

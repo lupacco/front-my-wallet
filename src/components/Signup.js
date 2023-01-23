@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Signup() {
+  const navigate = useNavigate()
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,10 +13,20 @@ export default function Signup() {
 
   function handleSignup(event) {
     event.preventDefault();
-    console.log(name);
-    console.log(email);
-    console.log(password);
-    console.log(confirmPwd);
+
+    if(password !== confirmPwd){
+      return alert("As senhas não coincidem!")
+    }
+    
+    axios.post('http://localhost:5000/cadastro', {
+      name:name,
+      email:email,
+      password:password
+    })
+    .then(res => {
+      navigate("/")
+    })
+    .catch(err => console.log(err))
   }
 
   return (
