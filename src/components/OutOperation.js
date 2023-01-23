@@ -30,7 +30,7 @@ export default function OutOperation() {
         },
       })
       .then((res) => {
-        console.log(transaction);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
