@@ -5,24 +5,6 @@ import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import RegistersContext from "../contexts/RegistersContext";
 
-// const registers = [
-//     {
-//         date: "13/01",
-//         description: "Almoço no restaurante",
-//         value: 39.90
-//     },
-//     {
-//         date: "17/01",
-//         description: "Janta",
-//         value: 19.00
-//     },
-//     {
-//         date: "20/01",
-//         description: "Almoço no restaurante",
-//         value: 39.90
-//     }
-
-// ]
 
 export default function Home() {
   const navigate = useNavigate();
@@ -53,7 +35,24 @@ export default function Home() {
         setBalance(newBalance.toFixed(2));
       })
       .catch((err) => console.log("deu ruim"));
-  }, []);
+  }, [registers]);
+
+  function deleteRegister(e, registerId){
+    console.log(e)
+    console.log(registerId)
+
+    axios.delete('http://localhost:5000/home', {
+        headers:{
+            Authorization:user.token,
+            registerId:registerId
+        }
+    })
+    .then(res => {
+        
+        console.log(res)
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <Container>
@@ -75,7 +74,7 @@ export default function Home() {
                 </div>
                 <div className="amount">
                   <p>{Number(register.value).toFixed(2)}</p>
-                  <ion-icon name="close-outline"></ion-icon>
+                  <ion-icon onClick={e => deleteRegister(e,register._id)} name="close-outline"></ion-icon>
                 </div>
               </Register>
             ))}
@@ -197,7 +196,7 @@ const Register = styled.div`
     > ion-icon {
       color: #c6c6c6;
       margin-left: 8px;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
