@@ -31,12 +31,12 @@ export default function OutOperation() {
       })
       .then((res) => {
         console.log(res.data);
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err);
       });
 
-    navigate("/home");
   }
 
   return (
