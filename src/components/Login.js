@@ -1,15 +1,29 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import axios from "axios"
+import UserContext from "../contexts/UserContext";
 
-export default function Login({user, setUser}) {
+export default function Login() {
+  const navigate = useNavigate()
+
+  const {setUser} = useContext(UserContext)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleLogin(event) {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
+    
+    axios.post('http://localhost:5000/', {
+      email:email,
+      password:password
+    })
+    .then(res => {
+      setUser(res.data)
+      navigate("/home")
+    })
+    .catch(err => console.log(err))
   }
 
   return (

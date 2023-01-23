@@ -1,35 +1,54 @@
 import styled from "styled-components"
 import {Link, useNavigate} from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import axios from "axios"
+import UserContext from "../contexts/UserContext"
+import RegistersContext from "../contexts/RegistersContext"
 
-const user = "Lucas"
 
-
-const registers = [
-    {
-        date: "13/01",
-        description: "Almoço no restaurante",
-        value: 39.90
-    },
-    {
-        date: "17/01",
-        description: "Janta",
-        value: 19.00
-    },
-    {
-        date: "20/01",
-        description: "Almoço no restaurante",
-        value: 39.90
-    }
+// const registers = [
+//     {
+//         date: "13/01",
+//         description: "Almoço no restaurante",
+//         value: 39.90
+//     },
+//     {
+//         date: "17/01",
+//         description: "Janta",
+//         value: 19.00
+//     },
+//     {
+//         date: "20/01",
+//         description: "Almoço no restaurante",
+//         value: 39.90
+//     }
     
-]
+// ]
 
 export default function Home(){
     const navigate = useNavigate()
 
+    const {user} = useContext(UserContext)
+    const {registers, setRegisters} = useContext(RegistersContext)
+
+    useEffect(()=>{
+        axios.get('http://localhost:5000/home', {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+                userid: user._id
+            }
+        })
+        .then(res => {
+            setRegisters(res.data)
+        })
+        .catch(err => console.log('deu ruim'))
+    }, [])
+
+
     return(
         <Container>
             <Header>
-                <h1>Olá, {user}</h1>
+                <h1>Olá, {user.name}</h1>
                 <button onClick={() => navigate('/')}>
                     <ion-icon name="log-out-outline"></ion-icon>
                 </button>
@@ -39,12 +58,12 @@ export default function Home(){
                 {registers.length > 0 ? (
                     <div>
                         {registers.map(register => (
-                            <Register key={register.date}>
+                            <Register key={register._id} type={register.type}>
                                 <div>
                                     <p>{register.date}</p>
                                     <p>{register.description}</p>
                                 </div>
-                                <p>{register.value.toFixed(2)}</p>
+                                <p>{Number(register.value).toFixed(2)}</p>
                             </Register>
                         ))}
                     </div>
@@ -161,7 +180,7 @@ const Register = styled.div`
         }
     }
     >p{
-        color: #C70000;
+        color: ${props => props.type=="out" ? (`#C70000`) : (`#03AC00`)};
     }
 `
 const Operations = styled.div`

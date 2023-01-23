@@ -1,64 +1,107 @@
-import { useNavigate } from "react-router-dom"
-import styled from "styled-components"
+import axios from "axios";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import dayjs from "dayjs";
+import UserContext from "../contexts/UserContext";
 
-export default function OutOperation(){
-    const navigate = useNavigate()
+export default function OutOperation() {
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
+  const [description, setDescription] = useState("");
 
-    return (
-        <Container>
-            <h1>Nova saída</h1>
+  const { user } = useContext(UserContext);
+  // console.log(user);
+  function handleNewWithdraw(event) {
+    event.preventDefault();
 
-            <FormContainer onSubmit={() => {navigate('/home')}}>
-                <input placeholder="Valor"></input>
-                <input placeholder="Descrição"></input>
+    let transaction = {
+      userId: user._id,
+      value,
+      description,
+      type: "out",
+      date: dayjs(new Date()).format("DD/MM"),
+    };
 
-                <button type="submit">Salvar saída</button>
-            </FormContainer>
+    axios
+      .post("http://localhost:5000/nova-entrada", transaction, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(transaction);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-        </Container>
-    )
+    navigate("/home");
+  }
+
+  return (
+    <Container>
+      <h1>Nova saída</h1>
+
+      <FormContainer onSubmit={handleNewWithdraw}>
+        <input
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          type="number"
+          placeholder="Valor"
+        ></input>
+        <input
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          placeholder="Descrição"
+        ></input>
+
+        <button type="submit">Salvar saída</button>
+      </FormContainer>
+    </Container>
+  );
 }
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
 
-    >h1{
-        width: 100%;
-        margin: auto;
-        font-size: 26px;
-        font-weight: 700;
-        text-align: left;
-        margin-bottom: 16px;
-    }
-`
+  > h1 {
+    width: 100%;
+    margin: auto;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+`;
 
 const FormContainer = styled.form`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 16px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
 
-    >input{
-        margin-bottom: 12px;
-        height: 58px;
-        border-style: none;
-        border-radius: 5px;
-        padding-left: 8px;
-        &::placeholder{
-            color: #000000;
-            font-size: 20px;
-        }
+  > input {
+    margin-bottom: 12px;
+    height: 58px;
+    border-style: none;
+    border-radius: 5px;
+    padding-left: 8px;
+    &::placeholder {
+      color: #000000;
+      font-size: 20px;
     }
-    >button{
-        height: 46px;
-        background-color: #A328D6;
-        border-style: none;
-        border-radius: 5px;
-        color: #FFFFFF;
-        font-weight: 700;
-        font-size: 20px;
-    }
-`
+  }
+  > button {
+    height: 46px;
+    background-color: #a328d6;
+    border-style: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 20px;
+  }
+`;
