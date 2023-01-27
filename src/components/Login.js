@@ -32,6 +32,7 @@ export default function Login() {
 
       <FormContainer onSubmit={handleLogin}>
         <input
+          data-test="email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -40,6 +41,7 @@ export default function Login() {
           placeholder="E-mail"
         ></input>
         <input
+          data-test="password"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
@@ -48,7 +50,7 @@ export default function Login() {
           placeholder="Senha"
         ></input>
 
-        <button type="submit">Entrar</button>
+        <button data-test="sign-in-submit" type="submit">Entrar</button>
       </FormContainer>
 
       <StyledLink to="/cadastro">Primeira vez? Cadastre-se!</StyledLink>

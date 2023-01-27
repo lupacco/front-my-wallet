@@ -37,9 +37,8 @@ export default function Home() {
       .catch((err) => console.log("deu ruim"));
   }, [registers]);
 
-  function deleteRegister(e, registerId){
-    console.log(e)
-    console.log(registerId)
+  function deleteRegister(registerId){
+    if(!window.confirm("Deseja mesmo deletar este registro?")) return
 
     axios.delete('http://localhost:5000/home', {
         headers:{
@@ -56,8 +55,8 @@ export default function Home() {
   return (
     <Container>
       <Header>
-        <h1>Olá, {user.name}</h1>
-        <button onClick={() => navigate("/")}>
+        <h1 data-test="user-name">Olá, {user.name}</h1>
+        <button data-test="logout" onClick={() => navigate("/")}>
           <ion-icon name="log-out-outline"></ion-icon>
         </button>
       </Header>
@@ -69,11 +68,11 @@ export default function Home() {
               <Register key={register._id} type={register.type}>
                 <div>
                   <p>{register.date}</p>
-                  <p>{register.description}</p>
+                  <p data-test="register-name">{register.description}</p>
                 </div>
                 <div className="amount">
-                  <p>{Number(register.value).toFixed(2)}</p>
-                  <ion-icon onClick={e => deleteRegister(e,register._id)} name="close-outline"></ion-icon>
+                  <p data-test="register-amount">{Number(register.value).toFixed(2)}</p>
+                  <ion-icon data-test="registry-delete" onClick={() => deleteRegister(register._id)} name="close-outline"></ion-icon>
                 </div>
               </Register>
             ))}
@@ -83,18 +82,18 @@ export default function Home() {
         )}
         <div className="balance">
           <p>SALDO</p>
-          <p>{balance}</p>
+          <p data-test="total-amount">{balance}</p>
         </div>
       </Registers>
 
       <Operations>
-        <div>
+        <div data-test="new-income">
           <StyledLink to="/nova-entrada">
             <ion-icon name="add-circle-outline"></ion-icon>
           </StyledLink>
           <p>Nova entrada</p>
         </div>
-        <div>
+        <div data-test="new-expense">
           <StyledLink to="/nova-saida">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </StyledLink>

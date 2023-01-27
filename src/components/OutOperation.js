@@ -45,18 +45,20 @@ export default function OutOperation() {
 
       <FormContainer onSubmit={handleNewWithdraw}>
         <input
+          data-test="registry-amount-input"
           onChange={(e) => setValue(e.target.value)}
           value={value}
           type="number"
           placeholder="Valor"
         ></input>
         <input
+          data-test="registry-name-input"
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           placeholder="Descrição"
         ></input>
 
-        <button type="submit">Salvar saída</button>
+        <button data-test="registry-save" type="submit">Salvar saída</button>
       </FormContainer>
     </Container>
   );

@@ -35,6 +35,7 @@ export default function Signup() {
 
       <FormContainer onSubmit={handleSignup}>
         <input
+          data-test="name"
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -43,6 +44,7 @@ export default function Signup() {
           placeholder="Nome"
         ></input>
         <input
+          data-test="email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -51,6 +53,7 @@ export default function Signup() {
           placeholder="E-mail"
         ></input>
         <input
+          data-test="password"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
@@ -59,6 +62,7 @@ export default function Signup() {
           placeholder="Senha"
         ></input>
         <input
+          data-test="conf-password"
           onChange={(e) => {
             setConfirmPwd(e.target.value);
           }}
@@ -67,7 +71,7 @@ export default function Signup() {
           placeholder="Confirme a senha"
         ></input>
 
-        <button type="submit">Cadastrar</button>
+        <button data-test="sign-up-submit" type="submit">Cadastrar</button>
       </FormContainer>
 
       <StyledLink to="/">Já tem uma conta? Entre agora!</StyledLink>
